@@ -1,0 +1,45 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"
+      xmlns:maps="@nativescript/google-maps">
+    <ActionBar title="Running Path Generator" />
+    
+    <GridLayout rows="*, auto">
+        <maps:MapView row="0"
+                     id="mapView"
+                     latitude="{{ currentLocation.latitude }}"
+                     longitude="{{ currentLocation.longitude }}"
+                     zoom="15"
+                     mapReady="onMapReady" />
+        
+        <StackLayout row="1" class="p-4 bg-white">
+            <GridLayout columns="*, auto" class="mb-2">
+                <TextField col="0"
+                          text="{{ address }}"
+                          hint="Enter address"
+                          class="p-2 border rounded-l-lg" />
+                <Button col="1"
+                        text="Set"
+                        tap="{{ setLocationFromAddress }}"
+                        class="bg-green-500 text-white p-2 rounded-r-lg" />
+            </GridLayout>
+            
+            <Button text="Use Current Location"
+                    tap="{{ useCurrentLocation }}"
+                    class="mb-4 bg-gray-500 text-white p-2 rounded-lg" />
+            
+            <Label text="Distance (km)" class="text-lg mb-2" />
+            <Slider value="{{ distance }}" 
+                    minValue="1000" 
+                    maxValue="10000" 
+                    step="500" />
+            <Label text="{{ distance / 1000 }} km" class="text-center mb-2" />
+            
+            <Button text="Generate Route" 
+                    tap="{{ generateRoute }}"
+                    class="bg-blue-500 text-white p-4 rounded-lg"
+                    isEnabled="{{ !isLoading }}" />
+                    
+            <ActivityIndicator busy="{{ isLoading }}"
+                             class="m-4" />
+        </StackLayout>
+    </GridLayout>
+</Page>
